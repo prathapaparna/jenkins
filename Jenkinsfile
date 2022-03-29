@@ -20,18 +20,25 @@ return[\'dlapi\']
         
         stage('git') {
             steps {
-                git branch: 'main', url: 'https://github.com/prathapaparna/jenkins.git'
+               // git branch: 'main', url: 'https://github.com/prathapaparna/jenkins.git'
+                dir('a-child-repo') {
+                git branch: 'main', url: 'https://github.com/prathapaparna/gitlab.git'
+                }
             }
         }
+        
         stage('props') {
 		    when  {
-			  expression {  readFile('inventory.ini').contains("$params.environment_group") && environment_group.equalsIgnoreCase("DEV") &&  readFile('deployment.txt').contains("$params.version") }
+			  expression {  readFile('a-child-repo/inventory.ini').contains("$params.environment_group") && environment_group.equalsIgnoreCase("DEV") &&  readFile('a-child-repo/deployment.txt').contains("$params.version") }
 			  
 			  }
             steps {
                script {
+                  // sh "cd a-child-repo/"
+                  // env.WORKSPACE = pwd()
+                  // println (env.WORKSPACE)
+                   def deploymentfile = readProperties file: 'a-child-repo/deployment.txt'
                    
-                   def deploymentfile = readProperties file: 'deployment.txt'
                    version = deploymentfile["$params.version"]
                    println (version)
                    version_split = version.tokenize(',')
@@ -39,7 +46,8 @@ return[\'dlapi\']
                    
                    for (entry in version_split) {
                        println (entry)
-                       def inventoryfile = readProperties file: "inventory.ini"
+                     
+                       def inventoryfile = readProperties file: "a-child-repo/inventory.ini"
                        if(inventoryfile.containsKey(entry)) {
 				       
 			
@@ -50,10 +58,10 @@ return[\'dlapi\']
                    for (serverIP in fileContents_split) {
                        println (serverIP)
                        build job: 'sonarjob',
-                parameters: [ string(name: 'version', value: version),
-                string(name: 'environment_group', value: environment_group),
-                string(name: 'app_name', value: app_name),
-                string(name: 'war_file', value: war_file),
+                parameters: [ string(name: 'version', value: params.version),
+                string(name: 'environment_group', value: params.environment_group),
+                string(name: 'app_name', value: params.app_name),
+                string(name: 'war_file', value: params.war_file),
                 string(name: 'serverIP', value: "$serverIP")
                 
                 ]
