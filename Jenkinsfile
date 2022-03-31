@@ -5,13 +5,13 @@ pipeline {
         stage('parameters') {
             steps {
                script {
-                   properties([durabilityHint('MAX_SURVIVABILITY'), parameters([choice(choices: ['rssxweb', 'rssxoe', 'dlapi'], name: 'app_name'), [$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT', filterLength: 1, filterable: false, name: 'war_file', randomName: 'choice-parameter-22912773408489', referencedParameters: 'app_name', script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: false, script: ''], script: [classpath: [], sandbox: false, script: '''if(app_name==\'rssxweb\'){
+                   properties([parameters([choice(choices: ['rssxweb', 'rssxoe', 'dlapi', 'rssxsupport'], name: 'app_name'), [$class: 'CascadeChoiceParameter', choiceType: 'PT_SINGLE_SELECT', filterLength: 1, filterable: false, name: 'war_file', randomName: 'choice-parameter-22912773408489', referencedParameters: 'app_name', script: [$class: 'GroovyScript', fallbackScript: [classpath: [], sandbox: true, script: ''], script: [classpath: [], sandbox: true, script: '''if(app_name==\'rssxweb\'){
 return[\'rssxweb\']
 }
 else if(app_name==\'rssxoe\'){
 return[\'rssxoe\']
 }
-else(app_name==\'dlapi\'){
+else if(app_name==\'dlapi\' || app_name==\'rssxsupport\'){
 return[\'dlapi\']
 }''']]], choice(choices: ['DEV', 'QA'], name: 'environment_group'), string('version')])])
                } 
@@ -80,4 +80,3 @@ return[\'dlapi\']
             }
         }
     }
-
