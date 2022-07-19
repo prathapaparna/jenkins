@@ -1,6 +1,6 @@
 # jenkins
 
-## jenkins backup  
+## jenkins backup   for recovery
 use below url to take jenkins backup
 using EBS snapshot create a disk and attched to a mount point ---> /jenkins_backup
 ### backup
