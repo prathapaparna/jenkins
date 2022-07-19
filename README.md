@@ -12,3 +12,6 @@ source ---> /var/lib/jenkins of old server
  source ---> /jenkins_backup
 
 https://devopscube.com/jenkins-backup-data-configurations/
+
+
+---------------------------------------------
