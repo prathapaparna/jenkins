@@ -69,7 +69,7 @@ return[\'dlapi\']
 				        
 				  }
 				  else {
-					echo "null "
+					echo "null value"
 				  }
                    }
                  
