@@ -14,4 +14,9 @@ source ---> /var/lib/jenkins of old server
 https://devopscube.com/jenkins-backup-data-configurations/
 
 
+## Multibranch pipeline
+
+https://devopscube.com/jenkins-multibranch-pipeline-tutorial/
+
+
 ---------------------------------------------
